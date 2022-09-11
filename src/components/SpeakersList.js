@@ -1,6 +1,8 @@
 import Speaker from "./Speaker";
-
-function SpeakersList({ data, ShowSession }) {
+import { data } from "../../SpeakerData";
+import { useState } from "react";
+function SpeakersList({ ShowSession }) {
+  const [data, setData] = useState(data);
   return (
     <div className="container speakers-list">
       <div className="row">

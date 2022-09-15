@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { useContext } from "react";
+import { SpeakerFilterContext } from "../contexts/SpeakerFilterContext";
+
 function Session({ title, room }) {
   return (
     <span className="session w-100">
@@ -94,8 +97,9 @@ function SpeakerDemographics({
   );
 }
 
-function Speaker({ speaker, ShowSession, onFavoriteToggle }) {
+function Speaker({ speaker, onFavoriteToggle }) {
   const { id, first, last, sessions } = speaker;
+  const { ShowSession } = useContext(SpeakerFilterContext);
   return (
     <div className="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-sm-12 col-xs-12">
       <div className="card card-height p-4 mt-4">

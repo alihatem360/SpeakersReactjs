@@ -1,3 +1,4 @@
+import { useState } from "react";
 function Session({ title, room }) {
   return (
     <span className="session w-100">
@@ -28,15 +29,29 @@ function SpeakerImage({ id, first, last }) {
 }
 
 function SpeakerFavorite({ favorite, onFavoriteToggle }) {
+  const [transiantFavorite, setTransiantFavorite] = useState(false);
+
+  const doneCallBack = () => {
+    setTransiantFavorite(false);
+    console.log("doneCallBack " + " " + new Date().getMilliseconds());
+  };
   return (
     <div className="action padB1">
-      <span onClick={onFavoriteToggle}>
+      <span
+        onClick={function () {
+          setTransiantFavorite(true);
+          return onFavoriteToggle(doneCallBack);
+        }}
+      >
         <i
           className={
             favorite === true ? "fa fa-star orange" : "fa fa-star-o orange"
           }
         />{" "}
         Favorite{" "}
+        {transiantFavorite && (
+          <span className="fa fa-spinner fa-pulse fa-fw"></span>
+        )}
       </span>
     </div>
   );

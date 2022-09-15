@@ -1,4 +1,8 @@
-function SpeakersToolbar({ theme, setTheme, ShowSession, setShowSession }) {
+import { themContext } from "./Layout";
+import { useContext } from "react";
+
+function SpeakersToolbar({ ShowSession, setShowSession }) {
+  const { theme, setTheme } = useContext(themContext);
   return (
     <section className="toolbar dark-theme-header">
       <div className="container">
@@ -17,7 +21,7 @@ function SpeakersToolbar({ theme, setTheme, ShowSession, setShowSession }) {
             </li>
             <li className="d-flex flex-column flex-md-row ml-sm-5 ml-0">
               <strong>Theme</strong>
-              <label classname="dropdown">
+              <label className="dropdown">
                 <select
                   className="form-control theme"
                   value={theme}

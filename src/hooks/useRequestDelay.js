@@ -1,14 +1,13 @@
 // initialize state  of speakers
 import { useState, useEffect } from "react";
-import { data } from "../../SpeakerData";
 
 export const REQUEST_STATUS = {
   LOADING: "loading",
   SUCCESS: "success",
   FAILURE: "failure",
 };
-function useRequestSpkers(delayTime) {
-  const [speakerData, setSpeakerData] = useState([]);
+function useRequestDelay(delayTime, initialData = []) {
+  const [data, setData] = useState(initialData);
   const [message, setMessage] = useState("");
   const [requestState, setRequestState] = useState(REQUEST_STATUS.LOADING);
   // crate delay function
@@ -19,7 +18,7 @@ function useRequestSpkers(delayTime) {
       try {
         await delay(delayTime);
         setRequestState(REQUEST_STATUS.SUCCESS);
-        setSpeakerData(data);
+        setData(data);
       } catch (error) {
         setRequestState(REQUEST_STATUS.FAILURE);
         setMessage(error.message);
@@ -29,28 +28,32 @@ function useRequestSpkers(delayTime) {
     fetchData();
   }, []);
 
-  const onFavoriteToggle = (id) => {
-    const speakerRecPreviosState = speakerData.find((rec) => {
-      return rec.id === id;
+  const updateRecord = (record) => {
+    console.log("record ", record);
+    const newData = data.map((item) => {
+      if (item.id === record.id) {
+        return record;
+      }
+      return item;
     });
 
-    const speakerUpdated = {
-      ...speakerRecPreviosState,
-      favorite: !speakerRecPreviosState.favorite,
-    };
+    async function delayFunction() {
+      try {
+        await delay(1000);
+        setData(newData);
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
 
-    const speakerUpdatedData = speakerData.map((rec) => {
-      return rec.id === id ? speakerUpdated : rec;
-    });
-
-    setSpeakerData(speakerUpdatedData);
+    delayFunction();
   };
 
   return {
-    speakerData,
+    data,
     requestState,
     message,
-    onFavoriteToggle,
+    updateRecord,
   };
 }
-export default useRequestSpkers;
+export default useRequestDelay;

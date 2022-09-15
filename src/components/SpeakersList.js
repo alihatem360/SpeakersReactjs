@@ -1,10 +1,15 @@
 import Speaker from "./Speaker";
-import useRequestSpkers, { REQUEST_STATUS } from "../hooks/useRequestSpkers";
+import useRequestDelay, { REQUEST_STATUS } from "../hooks/useRequestDelay";
 import ReactPlaceholder from "react-placeholder";
-
+import { data } from "../../SpeakerData";
 function SpeakersList({ ShowSession }) {
-  const { speakerData, isLoading, requestState, onFavoriteToggle } =
-    useRequestSpkers(2000);
+  const {
+    data: speakerData,
+    isLoading,
+    requestState,
+    updateRecord,
+  } = useRequestDelay(2000, data);
+
   if (requestState === REQUEST_STATUS.FAILURE) {
     return (
       <div className="text-danger">
@@ -29,7 +34,10 @@ function SpeakersList({ ShowSession }) {
                 speaker={speaker}
                 ShowSession={ShowSession}
                 onFavoriteToggle={() => {
-                  onFavoriteToggle(speaker.id);
+                  updateRecord({
+                    ...speaker,
+                    favorite: !speaker.favorite,
+                  }); // updateRecord(speaker);
                 }}
               />
             );

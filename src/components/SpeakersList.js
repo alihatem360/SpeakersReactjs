@@ -48,15 +48,7 @@ function SpeakersList() {
                 <Speaker
                   key={speaker.id}
                   speaker={speaker}
-                  onFavoriteToggle={(doneCallBack) => {
-                    updateRecord(
-                      {
-                        ...speaker,
-                        favorite: !speaker.favorite,
-                      },
-                      doneCallBack
-                    ); // updateRecord(speaker);
-                  }}
+                  updateRecord={updateRecord}
                 />
               );
             })}

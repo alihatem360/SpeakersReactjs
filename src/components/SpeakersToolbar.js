@@ -4,7 +4,15 @@ import { SpeakerFilterContext } from "../contexts/SpeakerFilterContext";
 
 function SpeakersToolbar() {
   const { theme, setTheme } = useContext(themContext);
-  const { ShowSession, setShowSession } = useContext(SpeakerFilterContext);
+  const {
+    ShowSession,
+    setShowSession,
+    eventYear,
+    setEventYear,
+    EVENT_YEARS,
+    queryString,
+    setQueryString,
+  } = useContext(SpeakerFilterContext);
   return (
     <section className="toolbar dark-theme-header">
       <div className="container">
@@ -34,6 +42,45 @@ function SpeakersToolbar() {
                 </select>
               </label>
             </li>
+            {/* staer */}
+            <li>
+              <div className="input-group">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Search..."
+                  onChange={(event) => {
+                    setQueryString(event.target.value);
+                  }}
+                />
+                <div className="input-group-append">
+                  <button className="btn btn-secondary" type="button">
+                    <i className="fa fa-search"></i>
+                  </button>
+                </div>
+              </div>
+            </li>
+            <li className="d-flex flex-column flex-md-row">
+              <strong>Year</strong>
+              <label className="dropmenu">
+                <select
+                  className="form-control"
+                  value={eventYear}
+                  onChange={({ currentTarget }) => {
+                    setEventYear(currentTarget.value);
+                  }}
+                >
+                  {EVENT_YEARS.map(function (year) {
+                    return (
+                      <option value={year} key={year}>
+                        {year}
+                      </option>
+                    );
+                  })}
+                </select>
+              </label>
+            </li>
+            {/* End */}
           </ul>
         </div>
       </div>
